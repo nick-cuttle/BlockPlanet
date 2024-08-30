@@ -1,0 +1,19 @@
+# Ignore all DLL files
+*.dll
+
+# Ignore specific DLL directory
+lib/SFML/*.dll
+
+# Ignore all files in the bin directory
+bin/
+
+# Ignore object files
+*.o
+*.obj
+
+
+.vscode/
+
+# Ignore build directories
+obj/
+Server/obj/
