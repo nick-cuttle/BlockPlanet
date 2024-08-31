@@ -46,11 +46,21 @@ $(SERVER_OBJ_DIR)/%.o: $(SERVER_SRC_DIR)/%.cpp
 $(TARGET_BP): $(BP_OBJECTS)
 	@mkdir -p $(BIN_DIR)
 	g++ -o $@ $^ -L$(SFML_LIB) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network
+	@if [ $$? -eq 0 ]; then \
+		printf "\033[0;32mBlock Planet Build Success!\033[0m\n"; \
+	else \
+		printf "\033[0;31mBlock Planet Build Failed!\033[0m\n"; \
+	fi
 
 # Rule to link the final Server executable
 $(TARGET_SERVER): $(SERVER_OBJECTS) $(SERVER_DEPS)
 	@mkdir -p $(BIN_DIR)
 	g++ -o $@ $^ -L$(SFML_LIB) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network
+	@if [ $$? -eq 0 ]; then \
+		printf "\033[0;32mServer Build Success!\033[0m\n"; \
+	else \
+		printf "\033[0;31mServer Build Failed!\033[0m\n"; \
+	fi
 
 # Rule to copy DLL files to the bin directory
 copy-dlls:

@@ -12,7 +12,7 @@ private:
 
 protected:
 	sf::RenderWindow* window;
-	std::vector<Button> buttons;
+	std::vector<Button*> buttons;
 	unsigned int screenWidth;
 	unsigned int screenHeight;
 
@@ -27,12 +27,12 @@ public:
 	}
 
 	virtual void draw() = 0;
-	virtual void handleButtons() = 0;
+	virtual void handleButtons(sf::Event event) = 0;
 
-	std::vector<Button> getButtons() {
+	std::vector<Button*>& getButtons() {
 		return buttons;
 	}
-	void setButtons(std::vector<Button>& b) {
+	void setButtons(std::vector<Button*>& b) {
 		buttons = b;
 	}
 
