@@ -3,7 +3,7 @@
 #define SCREEP_HPP
 
 #include <SFML/Graphics.hpp>
-#include "Button.h"
+#include "ui/Button.h"
 #include "Config.hpp"
 
 class Screen
@@ -17,6 +17,8 @@ protected:
 	unsigned int screenHeight;
 
 public:
+
+	Screen() = default;
 
 	Screen(sf::RenderWindow* win) {
 		this->window = win;

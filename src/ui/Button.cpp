@@ -74,8 +74,8 @@ Button::Button() {
 
 Button::Button(sf::String text, sf::Vector2f pos)
 {
-	font = new sf::Font();
-	if (!font->loadFromFile("../resources/Pixel_Font.ttf")) {
+	this->font = new sf::Font();
+	if (!this->font->loadFromFile("../resources/Pixel_Font.ttf")) {
 		std::cout << "FAILED TO LOAD FONT" << std::endl;
 	};
 	this->text = sf::Text(text, *font, 48);
@@ -110,7 +110,7 @@ void Button::draw(sf::RenderWindow* window) {
 	window->draw(text);
 }
 
-void Button::setCallback(void(*callback)()) {
+void Button::setCallback(std::function<void()> callback) {
 	onCallback = callback;
 }
 

@@ -3,8 +3,8 @@
 #define MENU_SCREEN_HPP
 
 #include "Screen.h"
-#include "Button.h"
-#include "InputButton.h"
+#include "ui/Button.h"
+#include "ui/InputButton.h"
 
 class MenuScreen : public Screen
 
@@ -17,13 +17,19 @@ private:
 	InputButton* nameButton;
 	Button* playButton;
 	void createButtons();
+	// void testCallback();
 
 public:
 	// Inherited via Screen
+	MenuScreen();
 	MenuScreen(sf::RenderWindow* win);
 	~MenuScreen();
 
-	void draw() override;
+	Button* getNameButton() {
+		return nameButton;
+	}
+
+    void draw() override;
 	void handleButtons(sf::Event event) override;
 };
 #endif

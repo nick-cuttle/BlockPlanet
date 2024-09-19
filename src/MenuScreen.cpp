@@ -5,12 +5,12 @@ void MenuScreen::createButtons()
 {
 	sf::Vector2f midVec = sf::Vector2f(screenWidth / 2, screenHeight / 2);
 	playButton = new Button(sf::String("Play"), midVec, sf::Color(0, 255, 0));
-	playButton->setCallback([]() {std::cout << "I HAVE AIDS\n";});
+	playButton->setCallback([]() { Config::gameState = Config::GameState::INITILIZATION; });
 
 	buttons.push_back(playButton);
 
 	midVec.y -= 100;
-	nameButton = new InputButton(sf::String("NAME: "), midVec, sf::Color(177, 177, 177));
+	nameButton = new InputButton(sf::String("Enter Name"), midVec, sf::Color(177, 177, 177), "Name: ");
 	buttons.push_back(nameButton);
 }
 
@@ -32,6 +32,8 @@ MenuScreen::MenuScreen(sf::RenderWindow *win)
 MenuScreen::~MenuScreen()
 {
 	delete titleFont;
+	delete playButton;
+	delete nameButton;
 }
 
 void MenuScreen::draw()

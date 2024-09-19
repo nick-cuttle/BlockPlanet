@@ -4,6 +4,8 @@
 # Ignore specific DLL directory
 lib/SFML/*.dll
 
+lib/FastNoise2
+
 # Ignore all files in the bin directory
 bin/
 

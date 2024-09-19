@@ -1,11 +1,18 @@
 #include "Client.hpp"
-#include "Config.hpp"
 #include <thread>
 #include <iostream>
+
 using PacketType = Config::PacketType;
 
-Client::Client(const std::string& ipAddress, unsigned short port)
-    : ipAddress(ipAddress), port(port)
+Client::Client()
+    : 
+    window(sf::VideoMode::getDesktopMode(), "BlockPlanet", sf::Style::Fullscreen),
+    ipAddress(Config::SERVER_IP), 
+    port(Config::SERVER_PORT),
+    menuScreen(&window),
+    players({}),
+    gameScreen(&window, &players),
+    player()
 {
 }
 
@@ -51,6 +58,8 @@ void Client::updatePlayers(sf::Packet& packet) {
         packet >> p;
         player = p;
     }
+
+    gameScreen.setPlayers(&players);
     
 }
 
@@ -81,7 +90,72 @@ void Client::processPacket(sf::Packet& packet) {
     }// END PLAYER_POS
 
 
+    }//END SWITCH
+
+}
+
+void Client::initGameState()
+{
+    //update gameState:
+
+    std::string nameText = menuScreen.getNameButton()->getText().getString().toAnsiString();
+    player.setName(nameText);
+
+    sf::Packet joinPacket;
+    PacketType joinType = PacketType::PLAYER_JOIN;
+ 
+    joinPacket << joinType << player;
+    sendPacket(joinPacket);
+
+    Config::gameState = Config::GameState::RUNNING;
+}
+
+/// @brief runner for the client, handles running the window
+void Client::run()
+{
+
+    while (window.isOpen())
+    {   
+
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed) window.close();
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) window.close();
+
+            menuScreen.handleButtons(event);
+
+        }
+        
+        if (Config::gameState == Config::GameState::RUNNING) {
+            gameScreen.draw();
+        }
+        else if (Config::gameState == Config::GameState::MENU) {
+            menuScreen.draw();
+        }
+        else if (Config::gameState == Config::GameState::INITILIZATION) {
+            initGameState();
+        }
+
+        //window.clear();
+        //for (Player& p : client.players) {
+
+        //    if (p.getName() == player.getName()) {
+
+        //        if (window.hasFocus())
+        //            p.move();
+        //        //if moved send packet to server.
+        //        if (p.getHasMoved()) {
+        //            sf::Packet packet;
+        //            PacketType pt = PacketType::PLAYER_MOVED;
+        //            packet << pt << p;
+        //            client.sendPacket(packet);
+        //        }
+        //    }
+        //    p.draw(window);
+        //}
+
+        //window.display();
     }
-
-
 }

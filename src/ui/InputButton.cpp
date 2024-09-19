@@ -11,15 +11,45 @@ InputButton::~InputButton()
 }
 
 InputButton::InputButton(const sf::String text, sf::Vector2f pos)
-    : Button(text, pos),
-      isActive(false)
+    : 
+    Button(text, pos),
+    isActive(false),
+    label("", *font, 48)
 {
 }
 
-InputButton::InputButton(const sf::String text, sf::Vector2f pos, sf::Color color)
-    :Button(text, pos, color),
-    isActive(false)
+InputButton::InputButton(const sf::String text, sf::Vector2f pos, sf::Color color, sf::String lab)
+    :
+    Button(text, pos, color),
+    isActive(false),
+    label(lab, *font, 48)
 {
+
+    label.setFont(*font);
+    // Get the bounds for both the label and the text
+    sf::FloatRect labelBounds = this->label.getLocalBounds();
+    sf::FloatRect textBounds = this->text.getLocalBounds();
+
+    // Calculate the total width and height to center both label and text as a group
+    float totalWidth = labelBounds.width + textBounds.width;
+    float totalHeight = std::max(labelBounds.height, textBounds.height);
+
+    // Adjust position to center the entire label + text block
+    sf::Vector2f centered{pos.x - totalWidth / 2, pos.y - totalHeight / 2};
+
+    // Set the label position
+    this->label.setPosition(centered);
+
+    // Set the text position right after the label
+    this->text.setPosition({centered.x + labelBounds.width, centered.y});
+
+    // Update the bounding box to fit both the label and the text
+    this->box = sf::RectangleShape({textBounds.width, totalHeight});
+
+    // Set the position of the box to match the centered label's position
+    this->box.setPosition(this->text.getPosition().x + textBounds.left, this->text.getPosition().y + textBounds.top);
+    setColor(color);
+
 }
 
 void InputButton::onEvent(sf::Event event)
@@ -58,11 +88,24 @@ void InputButton::onEvent(sf::Event event)
 
         //update space of box if characters modified.
         if (changed) {
-            box.setSize(text.getLocalBounds().getSize());
+
+            if (text.getString().isEmpty()) {
+                box.setSize({10, box.getLocalBounds().height});
+            }
+            else {
+                box.setSize(text.getLocalBounds().getSize());
+            }
         }
         
     }
 
+}
+
+void InputButton::draw(sf::RenderWindow *window)
+{
+    window->draw(label);
+    window->draw(box);
+	window->draw(text);
 }
 
 InputButton::InputButton(InputButton&& other)

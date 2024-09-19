@@ -36,6 +36,10 @@ public:
 
 	std::string getName();
 
+	void setName(std::string& name) {
+		this->name = name;
+	}
+
 	// Serialization
 	friend sf::Packet& operator << (sf::Packet& packet, const Player& player) {
 		return packet << player.name << player.position.x << player.position.y << player.index;

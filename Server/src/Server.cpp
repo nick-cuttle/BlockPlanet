@@ -34,6 +34,7 @@ void Server::broadcast(sf::Packet& packet) {
     }
 }
 
+// handle client thread.
 void Server::handleClient(sf::TcpSocket* client) {
     sf::Packet packet;
     while (client->receive(packet) == sf::Socket::Done) {

@@ -4,13 +4,16 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Mouse.hpp>
 #include <memory>
+
+#include <functional>
 class Button
 {
 protected:
 
 	sf::Text text;
 	sf::RectangleShape box;
-	void(*onCallback)();
+	//void(*onCallback)();
+	std::function<void()> onCallback;
 	sf::Color color;
 	sf::Font* font;
 
@@ -28,11 +31,15 @@ public:
     Button(const sf::String text, sf::Vector2f pos, sf::Color color);
 	
 	virtual void onEvent(sf::Event event);
-	void draw(sf::RenderWindow* window);
-	void setCallback( void(*callback)() );
+	virtual void draw(sf::RenderWindow* window);
+	void setCallback( std::function<void()> callback );
 	void setColor(sf::Color c) {
 		color = c;
 		box.setFillColor(color);
+	}
+
+	sf::Text& getText() {
+		return text;
 	}
 };
 #endif
