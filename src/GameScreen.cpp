@@ -1,8 +1,14 @@
 #include "GameScreen.hpp"
+#include "Config.hpp"
 
 void GameScreen::draw()
 {
+
+    if (!window->hasFocus()) {
+        return;
+    }
     window->clear();
+    terrain.render(player->getPosition(), window);
     for (Player& p : *players) {
 
         //    if (p.getName() == player.getName()) {

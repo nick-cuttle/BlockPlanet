@@ -3,21 +3,27 @@
 
 #include "Screen.h"
 #include "Player.hpp"
+#include "Terrain.hpp"
 
 class GameScreen : public Screen {
 
 private:
 
     std::vector<Player>* players;
+    Terrain terrain;
+    Player* player;
+    
 
 
 public:
 
     GameScreen() = default;
-    GameScreen(sf::RenderWindow* win, std::vector<Player>* plys)
+    GameScreen(sf::RenderWindow* win, std::vector<Player>* plys, Player* p)
         :
         Screen(win),
-        players(plys)
+        players(plys),
+        terrain(12345),
+        player(p)
     {
     }
 
@@ -27,6 +33,8 @@ public:
     void setPlayers(std::vector<Player>* players) {
         this->players = players;
     }
+
+    void setPlayer(Player* p) { this->player = &(*players)[p->getIndex()];}
 
 
 

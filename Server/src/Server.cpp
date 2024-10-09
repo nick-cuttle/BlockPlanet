@@ -66,7 +66,8 @@ void Server::processPacket(sf::Packet& packet) {
             std::unique_lock<std::mutex> lock(playersLock);
 
             players.push_back(player);
-            std::cout << "Player " << player.getName() << " Added Length is now: " << players.size() << std::endl;
+            std::cout << "Player " << player.getName() << " Added Length is now: " << players.size() << "P_POS " << player.getPosition().x
+            << ", " << player.getPosition().y << std::endl;
 
             lock.unlock();
 

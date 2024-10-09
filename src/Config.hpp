@@ -5,6 +5,7 @@
 #include <SFML/System.hpp>
 #include <iostream>
 #include "Config.hpp"
+#include <SFML/Window/VideoMode.hpp>
 
 namespace Config {
 
@@ -14,7 +15,8 @@ namespace Config {
 		RUNNING,
 		INITILIZATION
 	};
- 
+	
+	extern sf::VideoMode SCREEN_SIZE;
 	extern GameState gameState;
 	const unsigned short SERVER_PORT = 2525;
 	const std::string SERVER_IP{ "localhost" };

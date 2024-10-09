@@ -18,7 +18,7 @@ MenuScreen::MenuScreen(sf::RenderWindow *win)
     : Screen(win)
 {
 	titleFont = new sf::Font();
-	if (!titleFont->loadFromFile("../resources/Pixel_Font.ttf")) {
+	if (!titleFont->loadFromFile("../../resources/Pixel_Font.ttf")) {
 		std::cout << "FAILED TO LOAD TITLE FONT" << std::endl;
 	}
 	title = sf::Text(sf::String("BlockPlanet"), *titleFont, 100);

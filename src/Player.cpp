@@ -2,11 +2,13 @@
 #include "Config.hpp"
 
 sf::Vector2f Player::PLAYER_SIZE = sf::Vector2f(50, 100);
-double Player::PLAYER_SPEED = .1;
+double Player::PLAYER_SPEED = 10;
 
 Player::Player()
 	: Entity(sf::Vector2f(0, 0), PLAYER_SPEED, PLAYER_SIZE)
 {
+	sf::VideoMode vm = sf::VideoMode::getDesktopMode();
+	model.setPosition(vm.width / 2, vm.height / 2);
 	this->name = "DEFAULT";
 	this->index = -1;
 	this->hasMoved = false;
@@ -15,6 +17,8 @@ Player::Player()
 Player::Player(std::string name, sf::Vector2f pos)
 	: Entity(pos, PLAYER_SPEED, PLAYER_SIZE)
 {
+	sf::VideoMode vm = sf::VideoMode::getDesktopMode();
+	model.setPosition(vm.width / 2, vm.height / 2);
 	this->name = name;
 	this->index = -1;
 	this->hasMoved = false;
@@ -28,7 +32,7 @@ void Player::move() {
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-		position.y -= moveSpeed;
+		position.y += moveSpeed;
 		hasMoved = true;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
@@ -37,7 +41,7 @@ void Player::move() {
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-		position.y += moveSpeed;
+		position.y -= moveSpeed;
 		hasMoved = true;
 	}
 
@@ -47,7 +51,7 @@ void Player::move() {
 	}
 
 
-	model.setPosition(position);
+	//model.setPosition(position);
 	/*if (hasMoved) {
 		sf::Packet p;
 		p << Config::PacketType::PLAYER_POS << position.x << position.y;

@@ -2,14 +2,17 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "../TexureManager.hpp"
-
-class GrassBlock;
+#include <SFML/System/Vector2.hpp>
 
 class Block {
 
-public:
+private:
+
 
 public:
+
+    static constexpr float SIZE = 40.0f;
+
 
 protected:
 
@@ -25,6 +28,10 @@ public:
     Block();
     Block(sf::Vector2i pos);
 
+    sf::Vector2i& getPosition() { return pos; }
+
     virtual void draw(sf::RenderWindow* win);
+
+    void updatePosition(const sf::Vector2f& playerPos);
  
 };

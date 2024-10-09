@@ -5,8 +5,11 @@ LIB_DIR := lib
 BIN_DIR := bin
 SFML_INC := $(LIB_DIR)/SFML/include
 SFML_LIB := $(LIB_DIR)/SFML/lib
-FN_INC := $(LIB_DIR)/FastNoise2/include
 SFML_DLL := $(LIB_DIR)/SFML
+
+FN_INC := $(LIB_DIR)/FastNoise2/include
+FN_LIB := $(LIB_DIR)/FastNoise2/build/src/Release/
+
 SERVER_SRC_DIR := Server/src
 SERVER_OBJ_DIR := Server/obj
 
@@ -56,7 +59,7 @@ print:
 	@echo "BP_SOURCES: $(BP_SOURCES)"
 	@echo "SUB_DIRS:  $(BP_SUBDIRS)"
 # Default target
-all: prep-obj-subdirs $(TARGET_BP) $(TARGET_SERVER) copy-dlls
+all:  copy-dlls prep-obj-subdirs $(TARGET_BP) $(TARGET_SERVER)
 
 bp: prep-obj-subdirs $(TARGET_BP) copy-dlls
 
@@ -76,7 +79,7 @@ $(SERVER_OBJ_DIR)/%.o: $(SERVER_SRC_DIR)/%.cpp
 # Rule to link the final executable
 $(TARGET_BP): $(BP_OBJECTS)
 	@mkdir -p $(BIN_DIR)
-	g++ -o $@ $^ -L$(SFML_LIB) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network
+	g++ -o $@ $^ -L$(SFML_LIB) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network -L$(FN_LIB) -lFastNoise
 	@if [ $$? -eq 0 ]; then \
 		printf "\033[0;32mBlock Planet Build Success!\033[0m\n"; \
 	else \
@@ -86,7 +89,7 @@ $(TARGET_BP): $(BP_OBJECTS)
 # Rule to link the final Server executable
 $(TARGET_SERVER): $(SERVER_OBJECTS) $(SERVER_DEPS)
 	@mkdir -p $(BIN_DIR)
-	g++ -o $@ $^ -L$(SFML_LIB) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network
+	g++ -o $@ $^ -L$(SFML_LIB) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network -L$(FN_LIB) -lFastNoise
 	@if [ $$? -eq 0 ]; then \
 		printf "\033[0;32mServer Build Success!\033[0m\n"; \
 	else \
@@ -97,6 +100,7 @@ $(TARGET_SERVER): $(SERVER_OBJECTS) $(SERVER_DEPS)
 copy-dlls:
 	@mkdir -p $(BIN_DIR)
 	cp $(SFML_DLL)/*.dll $(BIN_DIR)
+	cp $(FN_LIB)/*.dll $(BIN_DIR)  # Copy FastNoise DLL
 
 # Clean target to remove generated files
 .PHONY: clean clean_bp

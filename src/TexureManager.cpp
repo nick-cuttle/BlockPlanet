@@ -3,8 +3,9 @@
 
 
 sf::Texture TextureManager::GrassBlockTexture;
-std::string TextureManager::RESOURCE_PATH = "../resources/";
+std::string TextureManager::RESOURCE_PATH = "../../resources/";
 std::string TextureManager::BLOCK_PATH = TextureManager::RESOURCE_PATH + "blocks/";
+
 
 using TM = TextureManager;
 

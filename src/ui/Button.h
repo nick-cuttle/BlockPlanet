@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Mouse.hpp>
 #include <memory>
+#include "../TexureManager.hpp"
 
 #include <functional>
 class Button

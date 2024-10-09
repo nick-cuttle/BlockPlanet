@@ -11,9 +11,10 @@ Client::Client()
     port(Config::SERVER_PORT),
     menuScreen(&window),
     players({}),
-    gameScreen(&window, &players),
-    player()
+    player(),
+    gameScreen(&window, &players, &player)
 {
+    window.setFramerateLimit(60);
 }
 
 void Client::connect() {
@@ -57,9 +58,14 @@ void Client::updatePlayers(sf::Packet& packet) {
         Player p;
         packet >> p;
         player = p;
+        if (p == this->player) {
+            this->player = p;
+            std::cout << "Player Pos: " << this->player.getPosition().x << "  " << this->player.getPosition().y << std::endl;
+        }
     }
 
     gameScreen.setPlayers(&players);
+    gameScreen.setPlayer(&( this->player) );
     
 }
 

@@ -65,7 +65,7 @@ Button &Button::operator=(const Button &other)
 
 Button::Button() {
 	font = new sf::Font();
-	font->loadFromFile("../resources/Pixel_Font.ttf");
+	font->loadFromFile(TextureManager::RESOURCE_PATH + "Pixel_Font.ttf");
 	this->text = sf::Text("", *font);
 	this->box = sf::RectangleShape(sf::Vector2f(100, 50));
 	this->onCallback = nullptr;
@@ -75,7 +75,7 @@ Button::Button() {
 Button::Button(sf::String text, sf::Vector2f pos)
 {
 	this->font = new sf::Font();
-	if (!this->font->loadFromFile("../resources/Pixel_Font.ttf")) {
+	if (!this->font->loadFromFile(TextureManager::RESOURCE_PATH + "Pixel_Font.ttf")) {
 		std::cout << "FAILED TO LOAD FONT" << std::endl;
 	};
 	this->text = sf::Text(text, *font, 48);

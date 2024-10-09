@@ -3,6 +3,7 @@
 
 #include "Entity.hpp"
 #include <SFML/Network.hpp>
+#include <string>
 
 class Player : public Entity {
 
@@ -36,6 +37,10 @@ public:
 
 	std::string getName();
 
+	bool operator==(Player& other) {
+		return this->name == other.name;
+	}
+
 	void setName(std::string& name) {
 		this->name = name;
 	}
@@ -48,7 +53,6 @@ public:
 	// Deserialization
 	friend sf::Packet& operator >> (sf::Packet& packet, Player& player) {
 		packet >> player.name >> player.position.x >> player.position.y >> player.index;
-		player.model.setPosition(player.position.x, player.position.y);
 		return packet;
 	}
 
